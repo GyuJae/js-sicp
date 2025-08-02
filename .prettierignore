@@ -1,0 +1,14 @@
+node_modules/
+dist/
+build/
+
+.git/
+
+bun.lockb
+bunfig.toml
+
+.env
+*.env.*
+
+*.snap
+coverage/
