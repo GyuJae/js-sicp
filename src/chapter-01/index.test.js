@@ -9,6 +9,17 @@ import {
   sum_of_squares,
   fib,
   count_change,
+  expt_recursive,
+  expt_iter,
+  fast_expt,
+  fast_expt_iter,
+  times,
+  sum_integers1,
+  sum_cubes1,
+  sum_cubes,
+  sum_integers,
+  pi_sum,
+  pi_approx,
 } from '.';
 
 describe('Chapter 01', () => {
@@ -62,5 +73,55 @@ describe('Chapter 01', () => {
 
   it('예제: 잔돈 만들기', () => {
     expect(count_change(100)).toBe(292);
+  });
+
+  it('연습문제 1.11', () => {
+    function f_iterative(n) {
+      function impl(a, b, c, count) {
+        return count === 0 ? a : impl(a + 2 * b + 3 * c, a, b, count - 1);
+      }
+      return n < 3 ? n : impl(2, 1, 0, n - 2);
+    }
+
+    function f_recursive(n) {
+      return n < 3
+        ? n
+        : f_recursive(n - 1) + 2 * f_recursive(n - 2) + 3 * f_recursive(n - 3);
+    }
+
+    expect(f_iterative(10)).toBe(1892);
+    expect(f_recursive(10)).toBe(1892);
+  });
+
+  it('연습문제 1.12', () => {
+    function pascal_triangle(row, index) {
+      return index > row
+        ? false
+        : index === 1 || index === row
+          ? 1
+          : pascal_triangle(row - 1, index - 1) +
+            pascal_triangle(row - 1, index);
+    }
+
+    expect(pascal_triangle(3, 2)).toBe(2);
+    expect(pascal_triangle(5, 2)).toBe(4);
+  });
+
+  it('거듭제곱', () => {
+    expect(expt_recursive(2, 10)).toBe(1024);
+    expect(expt_iter(2, 10)).toBe(1024);
+    expect(fast_expt(2, 10)).toBe(1024);
+    expect(fast_expt_iter(2, 10)).toBe(1024);
+    expect(times(2, 10)).toBe(20);
+  });
+
+  it('고차 함수를 이용한 추상의 정식화', () => {
+    expect(sum_integers1(1, 3)).toBe(6);
+    expect(sum_cubes1(1, 3)).toBe(36);
+    expect(sum_cubes(1, 3)).toBe(36);
+    expect(sum_integers(1, 5)).toBe(15);
+    expect(8 * pi_sum(1, 1000)).toBeCloseTo(3.138582655);
+    expect(factorial(5)).toBe(120);
+    expect(pi_approx(1000)).toBeCloseTo(3.14);
   });
 });
